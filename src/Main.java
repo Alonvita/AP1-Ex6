@@ -13,7 +13,13 @@ public class java_ex2 {
     public static void main(String[] args) {
         // parse file into a map
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a board size: ");
+        System.out.println("\t 1. 6x6");
+        System.out.println("\t 2. 8x8");
+        System.out.println("\t 2. 10x10");
         int size = scanner.nextInt();
+
+        
 
         Board board;
 
