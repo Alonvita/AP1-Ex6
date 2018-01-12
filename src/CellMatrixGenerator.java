@@ -11,12 +11,7 @@ public class CellMatrixGenerator {
      * @return a Cell matrix.
      * @throws Exception for invalid sizes.
      */
-    public Cell[][] generateMatrix(int size) throws Exception {
-        // Local variables
-        if (!(size == 6 || size == 8 || size == 10)) {
-            throw new Exception("Bad matrix size argument received");
-        }
-
+    public Cell[][] generateMatrix(int size) {
         // initialize a new Cells matrix
         Cell[][] matrix = new Cell[size][size];
 

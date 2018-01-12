@@ -30,4 +30,8 @@ public enum Cell {
     public String toString() {
         return cell;
     }
+
+    public void draw() {
+
+    }
 }

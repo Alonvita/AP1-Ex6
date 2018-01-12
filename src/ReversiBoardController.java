@@ -6,9 +6,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * ReversiGameController Class.
+ * ReversiBoardController Class.
  */
-public class ReversiGameController implements Initializable {
+public class ReversiBoardController implements Initializable {
     @FXML
     private HBox root;
     private Cell[][] matrix = {

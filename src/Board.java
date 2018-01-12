@@ -1,6 +1,7 @@
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 
@@ -27,30 +28,22 @@ public class Board extends GridPane {
     /***
      * Board(Cell[][] board).
      *
-     * @param size int -- the board size.
+     * @param type int -- the board size.
      */
-    public Board(int size) {
-        this.size = size;
+    public Board(int type) {
+        initalizeSize(type);
         this.cellsInUse = 0;
         this.matrixGenerator = new CellMatrixGenerator();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Board.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
 
         // try to initialize board
         try {
-            this.board = matrixGenerator.generateMatrix(size);
+            this.board = matrixGenerator.generateMatrix(this.size);
             this.occupiedCells = initializeOccupiedCells();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        // try to load fxml loader
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        initializeFxml();
     }
 
     /**
@@ -63,6 +56,24 @@ public class Board extends GridPane {
         this.board = matrix;
         this.matrixGenerator = null;
         this.occupiedCells = initializeOccupiedCells();
+
+        initializeFxml();
+    }
+
+    /**
+     * initializeFxml().
+     */
+    public void initializeFxml() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Board.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        // try to load fxml loader
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     //---------- GETTERS ----------
@@ -133,7 +144,10 @@ public class Board extends GridPane {
 
     //---------- PUBLIC FUNCTIONS ----------
 
-    public void Draw() {
+    /**
+     * draw().
+     */
+    public void draw() {
         this.getChildren().clear();
 
         int height = (int) this.getPrefHeight();
@@ -144,13 +158,33 @@ public class Board extends GridPane {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] == Cell.WHITE) {
-                    this.add(new Rectangle(cellWidth, cellHeight, Color.WHITE), j, i);
+                // Local variables
+                double circleCenterOffset = cellHeight / 2;
+                double radius = cellHeight / 2;
 
+                // create the empty cell rectangle
+                this.add(new Rectangle(cellWidth, cellHeight, Color.WHITE), j, i);
+
+                // white player's cell - add a circle
+                if (board[i][j] == Cell.WHITE) {
+                    this.add(
+                            new Circle(
+                                    i + circleCenterOffset,
+                                    j - circleCenterOffset,
+                                    radius,
+                                    Color.WHITE),
+                            j, i);
                 }
 
+                // black player's cell - add a circle
                 if (board[i][j] == Cell.BLACK) {
-                    this.add(new Rectangle(cellWidth, cellHeight, Color.BLACK), j, i);
+                    this.add(
+                            new Circle(
+                                    i + circleCenterOffset,
+                                    j - circleCenterOffset,
+                                    radius,
+                                    Color.BLACK),
+                            j, i);
                 }
             }
         }
@@ -268,6 +302,25 @@ public class Board extends GridPane {
     }
 
     //---------- PRIVATE FUNCTIONS ----------
+
+    /**
+     * initializeSize(int type).
+     *
+     * @param type int -- the board type
+     */
+    private void initalizeSize(int type) {
+        if (type == 1) {
+            this.size = 6;
+            return;
+        }
+
+        if (type == 3) {
+            this.size = 10;
+            return;
+        }
+
+        this.size = 8;
+    }
 
     /**
      * cellPotential(Position p, Cell color)

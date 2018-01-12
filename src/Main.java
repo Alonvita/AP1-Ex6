@@ -4,36 +4,40 @@
  * Github:  https://github.com/Alonvita
  */
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
 import java.util.Scanner;
 
 /**
- * java_ex2 Class -- Main.
+ * Main Class -- Main.
  */
-public class java_ex2 {
+public class Main extends Application {
     public static void main(String[] args) {
-        // parse file into a map
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a board size: ");
-        System.out.println("\t 1. 6x6");
-        System.out.println("\t 2. 8x8");
-        System.out.println("\t 2. 10x10");
-        int size = scanner.nextInt();
+        launch(args);
+    }
 
-        
-
-        Board board;
-
+    /**
+     * start(Stage primaryStage).
+     *
+     * @param primaryStage Stage -- the primary stage of the program.
+     */
+    @Override
+    public void start(Stage primaryStage) {
         try {
-            board = new Board(size);
+            HBox root = FXMLLoader.load(getClass().getResource("Board.fxml"));
+            Scene scene = new Scene(root, 520, 400);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+            primaryStage.setTitle("Reversi Game");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
+            e.printStackTrace();
         }
-
-        // create a game object
-        ReversiGame g = new ReversiGame(board);
-
-        // start game
-        g.start();
     }
 }

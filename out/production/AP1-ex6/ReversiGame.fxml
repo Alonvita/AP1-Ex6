@@ -14,7 +14,7 @@
 </AnchorPane>
 
 <HBox xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ReversiBoardController" fx:id="root" spacing="10">
+      fx:controller="ReversiGameController" fx:id="root" spacing="10">
     <VBox spacing="10">
         <Button>Start Game</Button>
         <Button>End Game</Button>

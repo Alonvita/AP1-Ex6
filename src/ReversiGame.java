@@ -36,13 +36,15 @@ public class ReversiGame {
      * start().
      */
     public void start() {
-        while (this.board.getSpaceLeft() > 0) {
+
+        board.draw();
+        /*while (this.board.getSpaceLeft() > 0) {
             // play a move
             this.board.moveMade(this.manager.nextMove(), this.manager.getCurrentPlayerColor());
             // end turn
             manager.endTurn();
         }
-        endGame();
+        endGame();*/
     }
 
     /**
